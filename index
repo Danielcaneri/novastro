@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORMULÁRIO NOVA ASTRO</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --border: #2a2a2a;
+      --border-hover: #444;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --accent: #ffffff;
+      --input-bg: #161616;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Soft ambient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(255,255,255,0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .logo {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 36px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    .intro {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.15s forwards;
+    }
+
+    /* Form sections */
+    form {
+      margin-top: 40px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 28px 20px;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .section:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03);
+    }
+
+    .section:nth-child(1) { animation-delay: 0.2s; }
+    .section:nth-child(2) { animation-delay: 0.28s; }
+    .section:nth-child(3) { animation-delay: 0.36s; }
+    .section:nth-child(4) { animation-delay: 0.44s; }
+    .section:nth-child(5) { animation-delay: 0.52s; }
+    .section:nth-child(6) { animation-delay: 0.60s; }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field:last-child {
+      margin-bottom: 4px;
+    }
+
+    label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      resize: vertical;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus {
+      border-color: #555;
+      background: #1a1a1a;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #555;
+    }
+
+    textarea {
+      min-height: 90px;
+    }
+
+    /* Radio / Checkbox style for yes-no */
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: color 0.25s ease;
+    }
+
+    .radio-option:hover {
+      color: var(--text);
+    }
+
+    .radio-option input {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      background: var(--input-bg);
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .radio-option input:checked {
+      border-color: #fff;
+      background: #fff;
+    }
+
+    .radio-option input:checked::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    /* Submit area */
+    .submit-area {
+      margin-top: 36px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+
+    .final-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    button[type="submit"] {
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 48px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,255,255,0.15);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    button .btn-text {
+      transition: opacity 0.2s ease;
+    }
+
+    button.loading .btn-text {
+      opacity: 0;
+    }
+
+    button .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      margin: -9px 0 0 -9px;
+      border: 2px solid transparent;
+      border-top-color: #000;
+      border-radius: 50%;
+      opacity: 0;
+      animation: spin 0.7s linear infinite;
+    }
+
+    button.loading .spinner {
+      opacity: 1;
+    }
+
+    /* Success / Error states */
+    .feedback {
+      display: none;
+      margin-top: 28px;
+      padding: 20px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .feedback.success {
+      display: block;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      color: var(--text);
+    }
+
+    .feedback.error {
+      display: block;
+      background: rgba(255,80,80,0.08);
+      border: 1px solid #442222;
+      color: #ffaaaa;
+    }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 560px) {
+      .container {
+        padding: 40px 16px 80px;
+      }
+      .section {
+        padding: 22px 18px 16px;
+      }
+      button[type="submit"] {
+        width: 100%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">FORMULÁRIO NOVA ASTRO</div>
+      <h1>FORMULÁRIO DE RECRUTAMENTO</h1>
+      <p class="subtitle">Equipe de Suporte</p>
+    </header>
+
+    <div class="intro">
+      Estamos buscando pessoas responsáveis, atenciosas e preparadas para integrar nossa equipe de suporte.<br>
+      Preencha todas as informações com atenção. As respostas serão analisadas pela administração do servidor.
+    </div>
+
+    <form id="recruitForm" novalidate>
+      <!-- 01. INFORMAÇÕES BÁSICAS -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">01</span>
+          Informações Básicas
+        </div>
+
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+        </div>
+
+        <div class="field">
+          <label for="idade">Idade</label>
+          <input type="number" id="idade" name="idade" placeholder="Ex: 18" min="13" max="99" required>
+        </div>
+
+        <div class="field">
+          <label for="discord">ID do Discord</label>
+          <input type="text" id="discord" name="discord" placeholder="Ex: usuario#0000 ou ID numérico" required>
+        </div>
+
+        <div class="field">
+          <label for="tempo_servidor">Há quanto tempo você está no servidor?</label>
+          <input type="text" id="tempo_servidor" name="tempo_servidor" placeholder="Ex: 3 meses" required>
+        </div>
+      </div>
+
+      <!-- 02. EXPERIÊNCIA -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">02</span>
+          Experiência
+        </div>
+
+        <div class="field">
+          <label>Você já trabalhou como suporte ou staff em algum servidor?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="experiencia_staff" value="Sim" required>
+              Sim
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="experiencia_staff" value="Não">
+              Não
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="descricao_experiencia">Se sim, descreva brevemente sua experiência</label>
+          <textarea id="descricao_experiencia" name="descricao_experiencia" placeholder="Conte um pouco sobre sua experiência..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Já teve experiência com atendimento de tickets?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="experiencia_tickets" value="Sim" required>
+              Sim
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="experiencia_tickets" value="Não">
+              Não
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="como_atendia">Explique como costumava realizar os atendimentos</label>
+          <textarea id="como_atendia" name="como_atendia" placeholder="Descreva seu método de atendimento..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="conhecimento_regras">Você possui conhecimento sobre as regras e funcionamento do servidor?</label>
+          <textarea id="conhecimento_regras" name="conhecimento_regras" placeholder="Sim / Não e justifique..." required></textarea>
+        </div>
+      </div>
+
+      <!-- 03. DISPONIBILIDADE -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">03</span>
+          Disponibilidade
+        </div>
+
+        <div class="field">
+          <label for="tempo_diario">Quanto tempo você costuma ficar disponível no Discord diariamente?</label>
+          <input type="text" id="tempo_diario" name="tempo_diario" placeholder="Ex: 4 a 6 horas" required>
+        </div>
+
+        <div class="field">
+          <label for="horarios">Em quais horários você normalmente está disponível?</label>
+          <input type="text" id="horarios" name="horarios" placeholder="Ex: 14h às 22h" required>
+        </div>
+
+        <div class="field">
+          <label>Você possui disponibilidade para atender membros quando necessário?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="disponibilidade_atender" value="Sim" required>
+              Sim
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="disponibilidade_atender" value="Não">
+              Não
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04. SITUAÇÕES DE ATENDIMENTO -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">04</span>
+          Situações de Atendimento
+        </div>
+
+        <div class="field">
+          <label for="membro_irritado">Como você lidaria com um membro irritado durante um atendimento?</label>
+          <textarea id="membro_irritado" name="membro_irritado" placeholder="Sua resposta..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="nao_souber">O que faria caso não soubesse resolver determinado problema?</label>
+          <textarea id="nao_souber" name="nao_souber" placeholder="Sua resposta..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="discussao_ticket">Como agiria caso dois membros começassem uma discussão dentro de um ticket?</label>
+          <textarea id="discussao_ticket" name="discussao_ticket" placeholder="Sua resposta..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="desrespeito">Se um membro desrespeitasse você durante o atendimento, como procederia?</label>
+          <textarea id="desrespeito" name="desrespeito" placeholder="Sua resposta..." required></textarea>
+        </div>
+      </div>
+
+      <!-- 05. PERFIL -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">05</span>
+          Perfil
+        </div>
+
+        <div class="field">
+          <label for="porque_boa_escolha">Por que você acredita que seria uma boa escolha para a equipe de suporte?</label>
+          <textarea id="porque_boa_escolha" name="porque_boa_escolha" placeholder="Sua resposta..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="qualidades">Quais são suas principais qualidades para trabalhar em equipe?</label>
+          <textarea id="qualidades" name="qualidades" placeholder="Sua resposta..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="algo_importante">Existe algo que você considera importante que a administração saiba sobre você?</label>
+          <textarea id="algo_importante" name="algo_importante" placeholder="Opcional..."></textarea>
+        </div>
+      </div>
+
+      <!-- 06. COMPROMISSO -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-number">06</span>
+          Compromisso
+        </div>
+
+        <div class="field">
+          <label>Você se compromete a seguir as regras internas da equipe e as orientações da administração?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="compromisso_regras" value="Sim" required>
+              Sim
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="compromisso_regras" value="Não">
+              Não
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Você entende que fazer parte da equipe exige responsabilidade, respeito e postura profissional?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="compromisso_postura" value="Sim" required>
+              Sim
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="compromisso_postura" value="Não">
+              Não
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINALIZAÇÃO -->
+      <div class="submit-area">
+        <p class="final-note">
+          Após o envio, aguarde a análise da administração.<br>
+          Boa sorte!
+        </p>
+        <button type="submit" id="submitBtn">
+          <span class="btn-text">Enviar Formulário</span>
+          <span class="spinner"></span>
+        </button>
+        <div id="feedback" class="feedback"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // ============================================================
+    //  COLE A URL DO SEU WEBHOOK DO DISCORD AQUI
+    //  (Configurações do canal > Integrações > Webhooks > Novo Webhook)
+    // ============================================================
+    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1554624104873730118/MQLEQf7jQZsJ8x0KiINNwUEA3gCnYjf9uix1w9ncsQ8KiBcvwdbMTuvITo-FJcZXvR7t";
+
+    const form = document.getElementById('recruitForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validação simples
+      const requiredFields = form.querySelectorAll('[required]');
+      let valid = true;
+      requiredFields.forEach(field => {
+        if (field.type === 'radio') {
+          const name = field.name;
+          if (!form.querySelector(`input[name="${name}"]:checked`)) {
+            valid = false;
+          }
+        } else if (!field.value.trim()) {
+          valid = false;
+          field.style.borderColor = '#663333';
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+
+      if (!valid) {
+        showFeedback('error', 'Campos incompletos', 'Por favor, preencha todos os campos obrigatórios antes de enviar.');
+        return;
+      }
+
+      if (DISCORD_WEBHOOK_URL === "COLE_AQUI_A_URL_DO_SEU_WEBHOOK" || !DISCORD_WEBHOOK_URL.includes('discord')) {
+        showFeedback('error', 'Webhook não configurado', 'Abra o arquivo HTML e cole a URL do webhook do Discord na variável DISCORD_WEBHOOK_URL.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      feedback.style.display = 'none';
+
+      const data = new FormData(form);
+      const fields = [];
+
+      // Monta os campos de forma organizada
+      const sections = [
+        {
+          title: '01. Informações Básicas',
+          items: [
+            { name: 'Nome', value: data.get('nome') },
+            { name: 'Idade', value: data.get('idade') },
+            { name: 'ID Discord', value: data.get('discord') },
+            { name: 'Tempo no servidor', value: data.get('tempo_servidor') }
+          ]
+        },
+        {
+          title: '02. Experiência',
+          items: [
+            { name: 'Já foi suporte/staff?', value: data.get('experiencia_staff') },
+            { name: 'Descrição da experiência', value: data.get('descricao_experiencia') || '—' },
+            { name: 'Experiência com tickets?', value: data.get('experiencia_tickets') },
+            { name: 'Como realizava atendimentos', value: data.get('como_atendia') || '—' },
+            { name: 'Conhecimento das regras', value: data.get('conhecimento_regras') }
+          ]
+        },
+        {
+          title: '03. Disponibilidade',
+          items: [
+            { name: 'Tempo diário no Discord', value: data.get('tempo_diario') },
+            { name: 'Horários disponíveis', value: data.get('horarios') },
+            { name: 'Disponível para atender?', value: data.get('disponibilidade_atender') }
+          ]
+        },
+        {
+          title: '04. Situações de Atendimento',
+          items: [
+            { name: 'Membro irritado', value: data.get('membro_irritado') },
+            { name: 'Não souber resolver', value: data.get('nao_souber') },
+            { name: 'Discussão no ticket', value: data.get('discussao_ticket') },
+            { name: 'Membro desrespeitoso', value: data.get('desrespeito') }
+          ]
+        },
+        {
+          title: '05. Perfil',
+          items: [
+            { name: 'Por que seria uma boa escolha', value: data.get('porque_boa_escolha') },
+            { name: 'Qualidades em equipe', value: data.get('qualidades') },
+            { name: 'Algo importante', value: data.get('algo_importante') || '—' }
+          ]
+        },
+        {
+          title: '06. Compromisso',
+          items: [
+            { name: 'Segue regras internas?', value: data.get('compromisso_regras') },
+            { name: 'Entende responsabilidade?', value: data.get('compromisso_postura') }
+          ]
+        }
+      ];
+
+      // Cria embeds (Discord limita a 10 embeds e 25 fields por embed)
+      const embeds = sections.map(sec => ({
+        title: sec.title,
+        color: 0x2b2b2b,
+        fields: sec.items.map(item => ({
+          name: item.name,
+          value: String(item.value).substring(0, 1024) || '—',
+          inline: false
+        }))
+      }));
+
+      const payload = {
+        username: 'Nova Astro • Recrutamento',
+        avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+        content: `**Novo formulário recebido** — ${data.get('nome')} (\`${data.get('discord')}\`)`,
+        embeds: embeds
+      };
+
+      try {
+        const response = await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok || response.status === 204) {
+          form.reset();
+          showFeedback('success', 'Formulário enviado com sucesso!', 'Aguarde a análise da administração. Boa sorte!');
+        } else {
+          showFeedback('error', 'Erro ao enviar', 'Não foi possível enviar o formulário. Tente novamente mais tarde.');
+        }
+      } catch (err) {
+        showFeedback('error', 'Erro de conexão', 'Verifique sua internet e tente novamente.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    });
+
+    function showFeedback(type, title, message) {
+      feedback.className = 'feedback ' + type;
+      feedback.innerHTML = `<strong>${title}</strong>${message}`;
+      feedback.style.display = 'block';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Remove borda vermelha ao digitar
+    form.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', () => {
+        el.style.borderColor = '';
+      });
+    });
+  </script>
+</body>
+</html>
